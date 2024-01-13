@@ -168,89 +168,74 @@
               </footer>
 
               <script>
-                  function authenticate(event) {
-                      event.preventDefault();
+                          // Function to add a new review or update
+        async function addContent(section, content) {
+            const response = await fetch(`${apiUrl}/addContent`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ section, content }),
+            });
+            const data = await response.json();
+            console.log('Added content:', data);
+            // Refresh the content after adding
+            loadContent();
+        }
 
-                      // Hardcoded credentials for demonstration purposes
-                      var expectedUsername = "admin";
-                      var expectedPassword = "password";
+        // Function to get reviews or updates
+        async function getContent(section) {
+            const response = await fetch(`${apiUrl}/getContent/${section}`);
+            const data = await response.json();
+            console.log('Fetched content:', data);
+            // Display the content on the admin interface
+            displayContent(section, data);
+        }
 
-                      // Get user input
-                      var enteredUsername = document.getElementById('username').value;
-                      var enteredPassword = document.getElementById('password').value;
+        // Function to update a review or update
+        async function updateContent(section, id, content) {
+            const response = await fetch(`${apiUrl}/updateContent`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ section, id, content }),
+            });
+            const data = await response.json();
+            console.log('Updated content:', data);
+            // Refresh the content after updating
+            loadContent();
+        }
 
-                      // Check if credentials are valid
-                      if (enteredUsername === expectedUsername && enteredPassword === expectedPassword) {
-                          // Show the content modification form
-                          document.getElementById('modify-content-form').classList.remove('hidden');
-                          alert("Login successful!");
-                      } else {
-                          // Display an error message
-                          alert("Invalid credentials. Please try again.");
-                      }
-                  }
+        // Function to delete a review or update
+        async function deleteContent(section, id) {
+            const response = await fetch(`${apiUrl}/deleteContent`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ section, id }),
+            });
+            const data = await response.json();
+            console.log('Deleted content:', data);
+            // Refresh the content after deleting
+            loadContent();
+        }
 
-                  function modifyContent(event) {
-                      event.preventDefault();
+        // Function to display reviews or updates on the admin interface
+        function displayContent(section, data) {
+            const container = document.getElementById(section);
+            container.innerHTML = ''; // Clear the existing content
 
-                      // Get modified content for Tech Review and Gaming Updates
-                      var techReviewContent = document.getElementById('tech-review').value;
-                      var gameUpdatesContent = document.getElementById('game-updates').value;
+            data.forEach(item => {
+                const div = document.createElement('div');
+                div.innerHTML = `${item.content} <button onclick="updateContent('${section}', '${item.id}', 'Updated content')">Update</button> <button onclick="deleteContent('${section}', '${item.id}')">Delete</button>`;
+                container.appendChild(div);
+            });
+        }
 
-                      // Update content on the server or perform any necessary actions
-                      updateContent('tech-reviews', techReviewContent);
-                      updateContent('game-updates', gameUpdatesContent);
+        // Function to load and display reviews and updates
+        async function loadContent() {
+            await getContent('tech-reviews');
+            await getContent('game-updates');
+        }
 
-                      // Refresh the modified content
-                      loadContent();
-                  }
-
-                  function updateContent(sectionId, newContent) {
-                      // Retrieve existing content from local storage
-                      var existingContent = JSON.parse(localStorage.getItem(sectionId)) || [];
-
-                      // Add the new content to the existing content
-                      existingContent.push(newContent);
-
-                      // Save the updated content to local storage
-                      localStorage.setItem(sectionId, JSON.stringify(existingContent));
-                  }
-
-                  function loadContent() {
-                      // Load and display content from local storage
-                      var techReviews = JSON.parse(localStorage.getItem('tech-reviews')) || [];
-                      var gameUpdates = JSON.parse(localStorage.getItem('game-updates')) || [];
-
-                      // Display content in the respective sections
-                      document.getElementById('tech-reviews').innerHTML = renderContent('tech-reviews', techReviews);
-                      document.getElementById('game-updates').innerHTML = renderContent('game-updates', gameUpdates);
-                  }
-
-                  function renderContent(sectionId, contentArray) {
-                      // Create HTML for rendering content
-                      var html = '';
-                      contentArray.forEach(function (item, index) {
-                          html += `<div class="content-item" data-index="${index}">${item} <button onclick="deleteContent('${sectionId}', '${index}')">Delete</button></div>`;
-                      });
-                      return html;
-                  }
-
-                  function deleteContent(sectionId, index) {
-                      // Delete content from local storage
-                      var content = JSON.parse(localStorage.getItem(sectionId)) || [];
-
-                      // Remove the item at the specified index
-                      content.splice(index, 1);
-
-                      // Save the updated content to local storage
-                      localStorage.setItem(sectionId, JSON.stringify(content));
-
-                      // Refresh the modified content
-                      loadContent();
-                  }
-
-                  // Load content when the page loads
-                  loadContent();
+        // Initialize the admin interface
+        loadContent();
               </script>
           </body>
           </html>
