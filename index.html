@@ -1,0 +1,80 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech & Gaming Blog</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Add any specific styles for the new sections here */
+        section {
+            margin: 20px;
+            text-align: center;
+        }
+
+        article {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tech & Gaming Blog</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="review.html">Tech Reviews</a></li>
+                <li><a href="updates.html">Gaming Updates</a></li>
+                <li><a href="admin.html">Admin</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="content">
+        <!-- Tech Reviews Section -->
+        <article>
+            <h2>Latest Tech Review 1</h2>
+            <img src="tech_product_image_1.jpg" alt="Tech Product Image 1">
+            <p>Description of the tech product review goes here...</p>
+            <button onclick="showDetails('tech')">Read More</button>
+        </article>
+
+        <article>
+            <h2>Latest Tech Review 2</h2>
+            <img src="tech_product_image_2.jpg" alt="Tech Product Image 2">
+            <p>Description of the tech product review goes here...</p>
+            <button onclick="showDetails('tech')">Read More</button>
+        </article>
+
+        <!-- Add more tech reviews as needed -->
+
+        <!-- Gaming Updates Section -->
+        <article>
+            <h2>Recent Gaming Update 1</h2>
+            <img src="game_update_image_1.jpg" alt="Game Update Image 1">
+            <p>Description of the game update goes here...</p>
+            <button onclick="showDetails('gaming')">Read More</button>
+        </article>
+
+        <article>
+            <h2>Recent Gaming Update 2</h2>
+            <img src="game_update_image_2.jpg" alt="Game Update Image 2">
+            <p>Description of the game update goes here...</p>
+            <button onclick="showDetails('gaming')">Read More</button>
+        </article>
+
+        <!-- Add more game updates as needed -->
+
+    </section>
+
+    <section id="details" class="hidden">
+        <h2 id="detail-title">Article Details</h2>
+        <p id="detail-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin id arcu sed orci pellentesque aliquet. Sed vestibulum, velit sit amet scelerisque suscipit, ligula nunc commodo odio, vel gravida or
